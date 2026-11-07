@@ -400,6 +400,16 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
       }}
     >
       <svg viewBox="0 0 300 540" width="100%" height="100%" style={{ overflow: 'visible' }}>
+        {/* Repeatable stylized Banten woven accessory, not an attempt to reproduce ceremonial attire. */}
+        <defs>
+          <pattern id="jange-tenun" width="18" height="30" patternUnits="userSpaceOnUse">
+            <rect width="18" height="30" fill="#30325B" />
+            <path d="M9 1 L15 8 L9 15 L3 8 Z M9 16 L15 23 L9 29 L3 23 Z"
+              fill="#A75A44" stroke="#E2B278" strokeWidth="1.2" />
+            <path d="M1 0 V30 M17 0 V30" stroke="#B4A0C7" strokeWidth="2" />
+            <path d="M0 14 H18" stroke="#D2AD79" strokeWidth="1.4" />
+          </pattern>
+        </defs>
         {/* ============================================================
             LAYER 01: GROUND SHADOW
            ============================================================ */}
@@ -461,14 +471,25 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
               stroke="#0F172A"
               strokeWidth="2.5"
             />
+            {isJange && (
+              <g>
+                <path d="M -12 55 L 5 47 L 14 60 L 10 76 L -7 72 Z"
+                  fill={palette.skinShadow} stroke="#24252B" strokeWidth="2" />
+                <path d="M -15 52 L 2 50 M -12 73 L 12 78 M -16 89 L -8 86"
+                  stroke="#B2B0AB" strokeWidth="1.8" fill="none" />
+                <path d="M -9 26 l5 3 M 8 101 l-4 5 M -11 115 l8 -2"
+                  stroke="#80786F" strokeWidth="2" opacity="0.8" />
+              </g>
+            )}
             {isJange ? (
               /* Jange ankle + Indonesian slide sandal */
               <g transform="translate(0, 142)">
                 <rect x="-11" y="0" width="22" height="18" rx="4" fill={palette.skin} />
                 {/* Sandal sole */}
-                <rect x="-16" y="16" width="42" height="10" rx="5" fill="#451A03" />
-                {/* Sandal strap */}
-                <path d="M -8 16 C 0 4, 16 4, 20 16" fill={palette.footwear} stroke="#290F02" strokeWidth="2" />
+                <rect x="-16" y="16" width="42" height="10" rx="5" fill="#1B2935" />
+                {/* Blue left sandal, intentionally mismatched. */}
+                <path d="M -8 16 C 0 4, 16 4, 20 16" fill="#345F76" stroke="#142F40" strokeWidth="2" />
+                <path d="M 1 10 l10 6" fill="none" stroke="#CCBA9D" strokeWidth="1.8" />
               </g>
             ) : (
               /* Bang Dullah work shoe */
@@ -488,11 +509,22 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
               stroke="#0F172A"
               strokeWidth="2.5"
             />
+            {isJange && (
+              <g>
+                <path d="M -12 63 L 5 57 L 14 70 L 8 81 L -9 78 Z"
+                  fill={palette.skinShadow} stroke="#24252B" strokeWidth="2" />
+                <path d="M -15 60 L 5 58 M -12 80 L 11 84 M 11 112 l-8 4"
+                  fill="none" stroke="#B2B0AB" strokeWidth="1.8" />
+                <path d="M 3 34 l5 6 M -12 95 l6 3" stroke="#80786F"
+                  strokeWidth="2" opacity="0.7" />
+              </g>
+            )}
             {isJange ? (
               <g transform="translate(0, 142)">
                 <rect x="-11" y="0" width="22" height="18" rx="4" fill={palette.skin} />
-                <rect x="-14" y="16" width="42" height="10" rx="5" fill="#451A03" />
-                <path d="M -6 16 C 2 4, 18 4, 22 16" fill={palette.footwear} stroke="#290F02" strokeWidth="2" />
+                <rect x="-14" y="16" width="42" height="10" rx="5" fill="#42201E" />
+                {/* Red right sandal, intentionally mismatched. */}
+                <path d="M -6 16 C 2 4, 18 4, 22 16" fill="#AD655E" stroke="#4E2623" strokeWidth="2" />
               </g>
             ) : (
               <rect x="-14" y="142" width="40" height="22" rx="8" fill={palette.footwear} />
@@ -512,6 +544,11 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                   stroke="#1E293B"
                   strokeWidth="3"
                 />
+                {/* Frayed hoodie seams and tiny worn patches, not a clean fashion render. */}
+                <path d="M -56 57 l8 5 l-6 6 M 57 55 l-6 6 l7 7"
+                  fill="none" stroke="#778495" strokeWidth="2" opacity="0.7" />
+                <path d="M -36 72 l8 -3 M -27 78 l6 -2"
+                  stroke="#18212B" strokeWidth="2" opacity="0.8" />
                 {/* Hoodie Ribbed Hem */}
                 <rect x="-54" y="80" width="108" height="14" rx="4" fill={palette.secondaryTop} />
                 {/* Kangaroo Front Pocket */}
@@ -524,6 +561,18 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 {/* Hoodie Drawstrings */}
                 <line x1="-12" y1="-55" x2="-14" y2="-12" stroke="#E2E8F0" strokeWidth="3" strokeLinecap="round" />
                 <line x1="12" y1="-55" x2="14" y2="-12" stroke="#E2E8F0" strokeWidth="3" strokeLinecap="round" />
+
+                {/* Threadbare fabric, seams and scuffs on Jange's hoodie. */}
+                <path d="M -57 -54 l11 10 l-7 3 M -38 18 l8 -4 l-3 8 M 22 66 l12 -7"
+                  stroke="#78716C" strokeWidth="2" fill="none" opacity="0.8" />
+                <path d="M -34 -29 l8 5 l-4 9 l-9 -3 Z" fill="#15151A"
+                  stroke="#68656A" strokeWidth="1.3" />
+
+                {/* Recurring Banten woven shoulder accent from the approved reference. */}
+                <path d="M 38 -72 Q 45 -77 54 -61 L 62 87 L 46 89 L 40 -37 Z"
+                  fill="url(#jange-tenun)" stroke="#8A6876" strokeWidth="1.8" />
+                <path d="M 47 90 v12 M 52 90 v13 M 58 90 v11"
+                  stroke="#CCAA91" strokeWidth="2" strokeLinecap="round" />
 
                 {/* LAYER 06: Small Crossbody Sling Bag */}
                 <line
@@ -542,12 +591,15 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                     width="48"
                     height="34"
                     rx="8"
-                    fill={palette.accessory}
-                    stroke="#78350F"
+                    fill="#777366"
+                    stroke="#403E38"
                     strokeWidth="2.5"
                   />
-                  <line x1="-18" y1="-4" x2="18" y2="-4" stroke="#FEF3C7" strokeWidth="2" />
-                  <rect x="-8" y="2" width="16" height="8" rx="2" fill="#1E293B" />
+                  <path d="M -18 -2 H 18 M -18 7 Q -5 11 12 8" fill="none"
+                    stroke="#3F423E" strokeWidth="2" />
+                  <path d="M -21 -12 l8 4 l5 -3 M 9 13 l8 -5" fill="none"
+                    stroke="#B9AD95" strokeWidth="2" opacity="0.75" />
+                  <rect x="-8" y="2" width="16" height="8" rx="2" fill="#363B3B" />
                 </g>
               </>
             ) : (
@@ -651,17 +703,16 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
             <circle cx="-54" cy="4" r="12" fill={palette.skinShadow} stroke="#431407" strokeWidth="2" />
             <circle cx="54" cy="4" r="12" fill={palette.skinShadow} stroke="#431407" strokeWidth="2" />
 
-            {/* Head Base */}
-            <rect
-              x="-52"
-              y="-58"
-              width="104"
-              height="114"
-              rx="44"
-              fill={palette.skin}
-              stroke="#431407"
-              strokeWidth="2.8"
-            />
+            {/* Jange's narrow asymmetric face matches the approved sheet better. */}
+            {isJange ? (
+              <path d="M -44 -52 Q -25 -63 0 -61 Q 30 -65 47 -49
+                Q 56 -20 51 8 Q 48 33 29 51 Q 11 63 -5 62
+                Q -30 54 -45 30 Q -57 1 -50 -25 Z"
+                fill={palette.skin} stroke="#51352B" strokeWidth="2.8" />
+            ) : (
+              <rect x="-52" y="-58" width="104" height="114" rx="44"
+                fill={palette.skin} stroke="#431407" strokeWidth="2.8" />
+            )}
 
             {/* Bang Dullah Light Stubble / Goatee */}
             {!isJange && (
@@ -695,9 +746,9 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 <ellipse
                   cx="0"
                   cy="0"
-                  rx="14"
-                  ry={emotion === 'shocked' ? 14 : 11}
-                  fill="#FFFFFF"
+                  rx={isJange ? 17 : 14}
+                  ry={emotion === 'shocked' ? 14 : isJange ? 9 : 11}
+                  fill={isJange ? '#F3ECE3' : '#FFFFFF'}
                   stroke="#1E293B"
                   strokeWidth="2"
                 />
@@ -705,7 +756,9 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 {/* Pupil & Iris */}
                 {upperEyelidDrop < 13 && (
                   <g transform={`translate(${pupilShiftX}, ${emotion === 'sleepy' ? 1.5 : 0})`}>
-                    <circle cx="0" cy="0" r={pupilRadius} fill="#0F172A" />
+                    <circle cx="0" cy={isJange ? 3 : 0}
+                      r={isJange ? Math.min(5, pupilRadius) : pupilRadius}
+                      fill="#1B191A" />
                     <circle cx="-1.8" cy="-2" r="1.6" fill="#FFFFFF" />
                   </g>
                 )}
@@ -723,6 +776,34 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 )}
               </g>
             ))}
+
+            {/* Jange's unmistakable left-cheek plaster, acne and sparse stubble. */}
+            {isJange && (
+              <g>
+                <g transform="translate(-33, 20) rotate(26)">
+                  <rect x="-10" y="-4" width="20" height="9" rx="3"
+                    fill="#E2C5A9" stroke="#AA846B" strokeWidth="1.1" />
+                  <rect x="-3" y="-3" width="6" height="7" rx="1"
+                    fill="#C8A88A" opacity="0.7" />
+                  <circle cx="-6" cy="0" r="0.8" fill="#AA846B" />
+                  <circle cx="6" cy="0" r="0.8" fill="#AA846B" />
+                </g>
+                <path d="M -37 10 Q -23 19 -14 12 M 13 12 Q 26 20 37 10"
+                  fill="none" stroke="#8C6657" strokeWidth="2" opacity="0.65" />
+                <path d="M -15 40 l2 3 M -7 43 l3 1 M 4 43 l2 2 M 15 41 l3 2"
+                  stroke="#58423B" strokeWidth="1.4" opacity="0.6" />
+                <circle cx="-20" cy="29" r="1.5" fill="#A85E51" />
+                <circle cx="21" cy="30" r="2" fill="#A85E51" />
+                <path d="M -37 20 Q -27 23 -20 20 M 18 20 Q 27 23 35 19"
+                  stroke="#9B5D50" strokeWidth="2" opacity="0.5" fill="none" />
+                <circle cx="-37" cy="18" r="2.2" fill="#A76454" opacity="0.7" />
+                <circle cx="30" cy="24" r="1.5" fill="#8F534C" opacity="0.7" />
+                <path d="M -8 42 l3 2 M 9 42 l3 1" stroke="#52342B"
+                  strokeWidth="1.5" opacity="0.7" />
+                <path d="M -26 8 Q -20 15 -12 10 M 13 10 Q 21 15 27 8"
+                  stroke="#8A564F" strokeWidth="2" opacity="0.55" fill="none" />
+              </g>
+            )}
 
             {/* Nose */}
             <path
@@ -763,17 +844,17 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                ============================================================ */}
             <g transform="translate(0, 31)">
               {viseme === 'REST' && (
-                <path
-                  d={
-                    emotion === 'confused'
-                      ? 'M -12 2 Q -2 -3 11 3'
-                      : 'M -13 0 Q 0 3 13 0'
-                  }
-                  fill="none"
-                  stroke="#431407"
-                  strokeWidth="3.2"
-                  strokeLinecap="round"
-                />
+                isJange && !isSpeaking && (emotion === 'sleepy' || emotion === 'confused')
+                  ? <g>
+                      {/* Slightly open, slack resting mouth; speaking M/B/P cues still close. */}
+                      <ellipse cx="1" cy="3" rx="11" ry="5.5" fill="#59322E"
+                        stroke="#70453D" strokeWidth="1.9" />
+                      <path d="M -5 0 l11 0" stroke="#E8C5AD" strokeWidth="1.3" />
+                    </g>
+                  : <path
+                      d={emotion === 'confused' ? 'M -12 2 Q -2 -3 11 3' : 'M -13 0 Q 0 3 13 0'}
+                      fill="none" stroke="#431407" strokeWidth="3.2"
+                      strokeLinecap="round" />
               )}
 
               {viseme === 'AA' && (
@@ -872,13 +953,21 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 LAYER 14: FRONT HAIR / CAP LAYER
                ============================================================ */}
             {isJange ? (
-              /* Jange Signature Messy Gen-Z Hair & Bangs */
-              <path
-                d="M -56 -24 C -62 -62, -25 -78, 4 -74 C 38 -78, 62 -56, 56 -20 C 46 -38, 32 -42, 22 -24 C 12 -44, -4 -42, -12 -20 C -26 -42, -42 -40, -56 -24 Z"
-                fill={palette.hair}
-                stroke="#0F172A"
-                strokeWidth="2"
-              />
+              /* Jange: bad middle-part, unwashed flattened strands, uneven tufts. Signature identity. */
+              <g>
+                <path d="M -57 -23 Q -67 -65 -38 -74 Q -14 -88 4 -79 Q 39 -91 56 -64 Q 68 -46 57 -17 L 46 -36 L 32 -25 L 26 -50 L 11 -29 L -3 -65 L -16 -22 L -33 -46 L -46 -15 Z"
+                  fill={palette.hair} stroke="#111319" strokeWidth="2.5" />
+                <path d="M -18 -70 Q -5 -53 -8 -30 M 2 -73 Q 17 -58 13 -38 M 39 -60 Q 48 -39 44 -28"
+                  fill="none" stroke="#55585D" strokeWidth="2" opacity="0.7" />
+                <path d="M -54 -23 Q -67 -15 -57 5 M 51 -25 Q 65 -17 56 -2"
+                  fill="none" stroke={palette.hair} strokeWidth="8" strokeLinecap="round" />
+                {/* The intentionally misplaced hair clip makes Jange easy to identify in every episode. */}
+                <rect x="-48" y="-57" width="23" height="7" rx="2.6" fill="#E9A0B4"
+                  stroke="#9E4A6A" strokeWidth="1.8" transform="rotate(-18 -36 -54)" />
+                <path d="M -43 -55 L -31 -58" stroke="#FFD5DC" strokeWidth="1.4" />
+                <path d="M -46 -45 L -56 -55 M 45 -55 L 54 -68" stroke={palette.hair}
+                  strokeWidth="7" strokeLinecap="round" />
+              </g>
             ) : (
               /* Bang Dullah Neat Parted Hair + Minimarket Visor Cap */
               <g>

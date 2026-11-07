@@ -122,160 +122,148 @@ async function synthesizeRawEngineAudio(
   profile: CharacterVoiceProfile,
   emotion: EmotionState
 ): Promise<{ samples: Float32Array; sampleRate: number; actualEngineUsed: TTSEngineId }> {
-  // 1. Try External OpenAI Commercial TTS if requested & configured
-  if (engineId === 'openai_external' && runtimeConfig.openaiApiKey) {
-    try {
-      const voice = profile.externalVoiceId || (profile.characterId === 'bang_dullah' ? 'onyx' : 'alloy');
-      const instructions = `Speak in natural Bahasa Indonesia (${profile.description}). Emotion: ${emotion}.`;
-      const response = await fetch('https://api.openai.com/v1/audio/speech', {
+  // Never silently substitute a robotic or non-commercial voice for the selected engine.
+  // A failed provider must be reported to the editor so a human can choose a replacement.
+  const fromPcm = (buffer: ArrayBuffer): Float32Array => {
+    const view = new DataView(buffer);
+    if (view.byteLength < 2 || view.byteLength % 2 !== 0) {
+      throw new Error('TTS provider returned an empty or malformed PCM audio stream.');
+    }
+    const samples = new Float32Array(view.byteLength / 2);
+    for (let i = 0; i < samples.length; i++) {
+      samples[i] = view.getInt16(i * 2, true) / 32768;
+    }
+    return samples;
+  };
+
+  if (engineId === 'openai_external') {
+    if (!runtimeConfig.openaiApiKey) {
+      throw new Error('OpenAI TTS belum dikonfigurasi. Masukkan API key, pilih mesin lain, atau unggah rekaman suara.');
+    }
+    const voice = profile.externalVoiceId || (profile.characterId === 'bang_dullah' ? 'onyx' : 'alloy');
+    const response = await fetch('https://api.openai.com/v1/audio/speech', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${runtimeConfig.openaiApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini-tts',
+        voice,
+        input: text,
+        instructions: `Speak naturally in Bahasa Indonesia. Character: ${profile.description}. Emotion: ${emotion}. Avoid robotic syllable-by-syllable delivery.`,
+        response_format: 'pcm',
+      }),
+    });
+    if (!response.ok) {
+      const info = (await response.text()).slice(0, 280);
+      throw new Error(`OpenAI TTS gagal (HTTP ${response.status}): ${info}`);
+    }
+    return {
+      samples: fromPcm(await response.arrayBuffer()),
+      sampleRate: 24000,
+      actualEngineUsed: 'openai_external',
+    };
+  }
+
+  if (engineId === 'elevenlabs_external') {
+    if (!runtimeConfig.elevenlabsApiKey) {
+      throw new Error('ElevenLabs TTS belum dikonfigurasi. Masukkan API key atau unggah rekaman suara.');
+    }
+    // Provider voice IDs are not interchangeable with OpenAI voice names.
+    const voiceId = profile.characterId === 'bang_dullah'
+      ? process.env.ELEVENLABS_VOICE_DULLAH || 'pNInz6obpgDQGcFmaJgB'
+      : process.env.ELEVENLABS_VOICE_JANGE || 'ErXwobaYiN019PkySvjV';
+    const response = await fetch(
+      `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}?output_format=pcm_24000`,
+      {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${runtimeConfig.openaiApiKey}`,
+          'xi-api-key': runtimeConfig.elevenlabsApiKey,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-4o-mini-tts',
-          voice,
-          input: text,
-          instructions,
-          response_format: 'pcm',
-        }),
-      });
-      if (response.ok) {
-        const arrayBuf = await response.arrayBuffer();
-        const int16 = new Int16Array(arrayBuf);
-        const floatSamples = new Float32Array(int16.length);
-        for (let i = 0; i < int16.length; i++) {
-          floatSamples[i] = int16[i] / 32768;
-        }
-        return {
-          samples: floatSamples,
-          sampleRate: 24000,
-          actualEngineUsed: 'openai_external',
-        };
-      }
-    } catch (err) {
-      console.warn('[TTS Service] OpenAI TTS fallback to local VITS:', err);
-    }
-  }
-
-  // 2. Try External ElevenLabs Multilingual v2 if requested & configured
-  if (engineId === 'elevenlabs_external' && runtimeConfig.elevenlabsApiKey) {
-    try {
-      const voiceId =
-        profile.characterId === 'bang_dullah'
-          ? 'pNInz6obpgDQGcFmaJgB' // Adam (deep adult male)
-          : 'ErXwobaYiN019PkySvjV'; // Antoni (young male)
-      const response = await fetch(
-        `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=pcm_24000`,
-        {
-          method: 'POST',
-          headers: {
-            'xi-api-key': runtimeConfig.elevenlabsApiKey,
-            'Content-Type': 'application/json',
+          text,
+          model_id: 'eleven_multilingual_v2',
+          voice_settings: {
+            stability: emotion === 'scared' || emotion === 'surprised' ? 0.35 : 0.65,
+            similarity_boost: 0.8,
+            style: emotion === 'calm' || emotion === 'sleepy' ? 0.2 : 0.6,
           },
-          body: JSON.stringify({
-            text,
-            model_id: 'eleven_multilingual_v2',
-            voice_settings: {
-              stability: emotion === 'scared' || emotion === 'surprised' ? 0.35 : 0.65,
-              similarity_boost: 0.8,
-              style: emotion === 'calm' || emotion === 'sleepy' ? 0.2 : 0.6,
-            },
-          }),
-        }
-      );
-      if (response.ok) {
-        const arrayBuf = await response.arrayBuffer();
-        const int16 = new Int16Array(arrayBuf);
-        const floatSamples = new Float32Array(int16.length);
-        for (let i = 0; i < int16.length; i++) {
-          floatSamples[i] = int16[i] / 32768;
-        }
-        return {
-          samples: floatSamples,
-          sampleRate: 24000,
-          actualEngineUsed: 'elevenlabs_external',
-        };
+        }),
       }
-    } catch (err) {
-      console.warn('[TTS Service] ElevenLabs fallback to local VITS:', err);
+    );
+    if (!response.ok) {
+      const info = (await response.text()).slice(0, 280);
+      throw new Error(`ElevenLabs TTS gagal (HTTP ${response.status}): ${info}`);
     }
+    return {
+      samples: fromPcm(await response.arrayBuffer()),
+      sampleRate: 24000,
+      actualEngineUsed: 'elevenlabs_external',
+    };
   }
 
-  // 3. Try Indonesian Neural Prosody Engine (msedge-tts id-ID-ArdiNeural) if selected
   if (engineId === 'edge_neural_id') {
     try {
       const { MsEdgeTTS } = await import('msedge-tts');
       const tts = new MsEdgeTTS();
-      await tts.setMetadata(
-        'id-ID-ArdiNeural',
-        'raw-24khz-16bit-mono-pcm' as any
-      );
+      await tts.setMetadata('id-ID-ArdiNeural', 'raw-24khz-16bit-mono-pcm' as any);
       const { audioStream } = tts.toStream(text);
       const chunks: Buffer[] = [];
       await new Promise<void>((resolve, reject) => {
         audioStream.on('data', (chunk: Buffer) => chunks.push(chunk));
-        audioStream.on('end', () => resolve());
-        audioStream.on('error', (e: Error) => reject(e));
+        audioStream.on('end', resolve);
+        audioStream.on('error', reject);
       });
-      const pcmBuf = Buffer.concat(chunks);
-      if (pcmBuf.length > 400) {
-        const sampleCount = Math.floor(pcmBuf.length / 2);
-        const floatSamples = new Float32Array(sampleCount);
-        for (let i = 0; i < sampleCount; i++) {
-          floatSamples[i] = pcmBuf.readInt16LE(i * 2) / 32768;
-        }
-        return {
-          samples: floatSamples,
-          sampleRate: 24000,
-          actualEngineUsed: 'edge_neural_id',
-        };
-      }
+      const bytes = Buffer.concat(chunks);
+      const pcm = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
+      return {
+        samples: fromPcm(pcm),
+        sampleRate: 24000,
+        actualEngineUsed: 'edge_neural_id',
+      };
     } catch (err) {
-      console.warn('[TTS Service] Edge Neural fallback to Local VITS:', err);
+      throw new Error(`Edge neural gagal: ${err instanceof Error ? err.message : String(err)}. Tidak dialihkan diam-diam ke suara robot.`);
     }
   }
 
-  // 4. Local Neural VITS Indonesian (`local_mms_vits_onnx` via @huggingface/transformers)
-  if (engineId !== 'local_klatt_dsp') {
+  if (engineId === 'local_mms_vits_onnx') {
     try {
       const vits = await getLocalIndonesianVitsPipeline();
       const out = await vits(text);
-      const rawAudio: Float32Array =
-        out.audio instanceof Float32Array
-          ? out.audio
-          : new Float32Array(out.audio);
+      const rawAudio = out.audio instanceof Float32Array
+        ? out.audio
+        : new Float32Array(out.audio);
+      if (rawAudio.length === 0) throw new Error('Model returned empty audio.');
       return {
         samples: rawAudio,
         sampleRate: out.sampling_rate || 16000,
         actualEngineUsed: 'local_mms_vits_onnx',
       };
     } catch (err) {
-      console.warn('[TTS Service] Local VITS error, using Klatt DSP:', err);
+      throw new Error(`Model lokal MMS gagal: ${err instanceof Error ? err.message : String(err)}. Pilih suara lain; fallback robot dimatikan.`);
     }
   }
 
-  // 5. Offline Klatt Formant DSP Fallback (`local_klatt_dsp`)
-  const estDuration = Math.max(1.4, Math.min(7.5, text.length * 0.085));
-  const phonemes = generateIndonesianPhonemes(text, estDuration);
-  const baseHz =
-    profile.characterId === 'bang_dullah'
-      ? 110
-      : profile.characterId === 'cashier_machine'
-      ? 185
-      : 145;
-  const dspSamples = synthesizeSpeechFromPhonemes(
-    estDuration,
-    phonemes,
-    baseHz,
-    profile.characterId === 'cashier_machine'
-  );
-  return {
-    samples: dspSamples,
-    sampleRate: 44100,
-    actualEngineUsed: 'local_klatt_dsp',
-  };
+  if (engineId === 'local_klatt_dsp') {
+    // This voice is deliberately mechanical. Use only when explicitly selected.
+    const estDuration = Math.max(1.4, Math.min(7.5, text.length * 0.085));
+    const phonemes = generateIndonesianPhonemes(text, estDuration);
+    const baseHz = profile.characterId === 'bang_dullah' ? 110 : profile.characterId === 'cashier_machine' ? 185 : 145;
+    return {
+      samples: synthesizeSpeechFromPhonemes(
+        estDuration,
+        phonemes,
+        baseHz,
+        profile.characterId === 'cashier_machine'
+      ),
+      sampleRate: 44100,
+      actualEngineUsed: 'local_klatt_dsp',
+    };
+  }
+
+  throw new Error(`Unsupported TTS engine: ${engineId}`);
 }
 
 /**

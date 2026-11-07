@@ -473,7 +473,7 @@
       "speakerName": "JANGE",
       "text": "Bang, kok toko lu doang yang nyala?",
       "startTime": 6,
-      "duration": 2.17,
+      "duration": 2.27,
       "audioRef": "/audio/dlg_01_jange.wav",
       "emotion": "confused",
       "ttsEngineUsed": "local_mms_vits_onnx",
@@ -488,136 +488,136 @@
       "phonemes": [
         {
           "offset": 0,
-          "duration": 0.052,
+          "duration": 0.055,
           "viseme": "REST",
           "syllable": "b",
           "energy": 0
         },
         {
-          "offset": 0.052,
-          "duration": 0.15,
+          "offset": 0.055,
+          "duration": 0.157,
           "viseme": "AA",
           "syllable": "bang",
-          "energy": 0.49
+          "energy": 0.51
         },
         {
-          "offset": 0.202,
-          "duration": 0.06,
+          "offset": 0.212,
+          "duration": 0.063,
           "viseme": "FV",
           "syllable": "g",
-          "energy": 0.86
+          "energy": 0.84
         },
         {
-          "offset": 0.262,
-          "duration": 0.135,
+          "offset": 0.275,
+          "duration": 0.141,
           "viseme": "REST",
           "syllable": ",",
-          "energy": 0.42
+          "energy": 0.32
         },
         {
-          "offset": 0.397,
-          "duration": 0.15,
+          "offset": 0.416,
+          "duration": 0.157,
           "viseme": "OH",
           "syllable": "kok",
-          "energy": 0.57
+          "energy": 0.52
         },
         {
-          "offset": 0.547,
-          "duration": 0.06,
+          "offset": 0.573,
+          "duration": 0.063,
           "viseme": "REST",
           "syllable": "k",
-          "energy": 0.03
+          "energy": 0
         },
         {
-          "offset": 0.607,
-          "duration": 0.15,
+          "offset": 0.636,
+          "duration": 0.157,
           "viseme": "OH",
           "syllable": "tok",
-          "energy": 0.47
+          "energy": 0.39
         },
         {
-          "offset": 0.757,
-          "duration": 0.06,
+          "offset": 0.793,
+          "duration": 0.063,
           "viseme": "REST",
           "syllable": "k",
-          "energy": 0.03
+          "energy": 0.02
         },
         {
-          "offset": 0.817,
-          "duration": 0.15,
+          "offset": 0.856,
+          "duration": 0.157,
           "viseme": "OH",
           "syllable": "o",
-          "energy": 0.55
+          "energy": 0.6
         },
         {
-          "offset": 0.967,
-          "duration": 0.15,
+          "offset": 1.013,
+          "duration": 0.157,
           "viseme": "OO",
           "syllable": "lu",
-          "energy": 0.59
+          "energy": 0.52
         },
         {
-          "offset": 1.117,
-          "duration": 0.15,
+          "offset": 1.17,
+          "duration": 0.157,
           "viseme": "AA",
           "syllable": "doang",
-          "energy": 0.65
-        },
-        {
-          "offset": 1.267,
-          "duration": 0.06,
-          "viseme": "FV",
-          "syllable": "g",
-          "energy": 0.74
+          "energy": 0.69
         },
         {
           "offset": 1.327,
-          "duration": 0.15,
-          "viseme": "AA",
-          "syllable": "yang",
-          "energy": 0.46
-        },
-        {
-          "offset": 1.477,
-          "duration": 0.06,
+          "duration": 0.063,
           "viseme": "FV",
           "syllable": "g",
-          "energy": 0.55
+          "energy": 0.79
         },
         {
-          "offset": 1.537,
-          "duration": 0.15,
+          "offset": 1.39,
+          "duration": 0.157,
+          "viseme": "AA",
+          "syllable": "yang",
+          "energy": 0.48
+        },
+        {
+          "offset": 1.547,
+          "duration": 0.063,
+          "viseme": "FV",
+          "syllable": "g",
+          "energy": 0.59
+        },
+        {
+          "offset": 1.61,
+          "duration": 0.157,
           "viseme": "AA",
           "syllable": "nyal",
-          "energy": 0.47
+          "energy": 0.37
         },
         {
-          "offset": 1.687,
-          "duration": 0.06,
+          "offset": 1.767,
+          "duration": 0.063,
           "viseme": "FV",
           "syllable": "l",
-          "energy": 0.61
+          "energy": 0.42
         },
         {
-          "offset": 1.747,
-          "duration": 0.15,
+          "offset": 1.83,
+          "duration": 0.157,
           "viseme": "AA",
           "syllable": "a",
-          "energy": 0.62
+          "energy": 0.6
         },
         {
-          "offset": 1.897,
-          "duration": 0.21,
+          "offset": 1.987,
+          "duration": 0.219,
           "viseme": "REST",
           "syllable": "?",
           "energy": 0.36
         },
         {
-          "offset": 2.107,
-          "duration": 0.067,
+          "offset": 2.206,
+          "duration": 0.07,
           "viseme": "REST",
           "syllable": "end",
-          "energy": 0
+          "energy": 0.01
         }
       ]
     },
@@ -627,7 +627,7 @@
       "speakerName": "BANG DULLAH",
       "text": "Gue juga kagak ngerti, Nge.",
       "startTime": 10.6,
-      "duration": 2.28,
+      "duration": 2.16,
       "audioRef": "/audio/dlg_02_dullah.wav",
       "emotion": "confused",
       "ttsEngineUsed": "local_mms_vits_onnx",
@@ -643,94 +643,94 @@
       "phonemes": [
         {
           "offset": 0,
-          "duration": 0.197,
+          "duration": 0.187,
           "viseme": "REST",
           "syllable": "gue",
           "energy": 0.01
         },
         {
-          "offset": 0.197,
-          "duration": 0.197,
-          "viseme": "REST",
+          "offset": 0.187,
+          "duration": 0.187,
+          "viseme": "OO",
           "syllable": "jug",
-          "energy": 0.01
+          "energy": 0.07
         },
         {
-          "offset": 0.394,
-          "duration": 0.197,
+          "offset": 0.374,
+          "duration": 0.187,
           "viseme": "AA",
           "syllable": "a",
-          "energy": 0.62
+          "energy": 0.68
         },
         {
-          "offset": 0.591,
-          "duration": 0.197,
+          "offset": 0.561,
+          "duration": 0.187,
           "viseme": "AA",
           "syllable": "kag",
-          "energy": 0.46
+          "energy": 0.51
         },
         {
-          "offset": 0.788,
-          "duration": 0.197,
+          "offset": 0.748,
+          "duration": 0.187,
           "viseme": "AA",
           "syllable": "ak",
-          "energy": 0.66
+          "energy": 0.67
         },
         {
-          "offset": 0.985,
-          "duration": 0.079,
+          "offset": 0.935,
+          "duration": 0.075,
           "viseme": "FV",
           "syllable": "k",
-          "energy": 0.95
+          "energy": 0.04
         },
         {
-          "offset": 1.064,
-          "duration": 0.197,
+          "offset": 1.01,
+          "duration": 0.187,
           "viseme": "EE",
           "syllable": "nger",
-          "energy": 0.44
-        },
-        {
-          "offset": 1.261,
-          "duration": 0.079,
-          "viseme": "FV",
-          "syllable": "r",
-          "energy": 0.31
-        },
-        {
-          "offset": 1.34,
-          "duration": 0.197,
-          "viseme": "EE",
-          "syllable": "ti",
-          "energy": 0.45
-        },
-        {
-          "offset": 1.537,
-          "duration": 0.178,
-          "viseme": "REST",
-          "syllable": ",",
-          "energy": 0.47
-        },
-        {
-          "offset": 1.715,
-          "duration": 0.197,
-          "viseme": "EE",
-          "syllable": "nge",
-          "energy": 0.46
-        },
-        {
-          "offset": 1.912,
-          "duration": 0.276,
-          "viseme": "REST",
-          "syllable": ".",
           "energy": 0.41
         },
         {
-          "offset": 2.188,
-          "duration": 0.089,
+          "offset": 1.197,
+          "duration": 0.075,
+          "viseme": "FV",
+          "syllable": "r",
+          "energy": 0.63
+        },
+        {
+          "offset": 1.272,
+          "duration": 0.187,
+          "viseme": "EE",
+          "syllable": "ti",
+          "energy": 0.34
+        },
+        {
+          "offset": 1.459,
+          "duration": 0.168,
+          "viseme": "REST",
+          "syllable": ",",
+          "energy": 0.3
+        },
+        {
+          "offset": 1.627,
+          "duration": 0.187,
+          "viseme": "EE",
+          "syllable": "nge",
+          "energy": 0.49
+        },
+        {
+          "offset": 1.814,
+          "duration": 0.262,
+          "viseme": "REST",
+          "syllable": ".",
+          "energy": 0.34
+        },
+        {
+          "offset": 2.076,
+          "duration": 0.084,
           "viseme": "REST",
           "syllable": "end",
-          "energy": 0.05
+          "energy": 0.02
         }
       ]
     },
@@ -740,7 +740,7 @@
       "speakerName": "MESIN KASIR",
       "text": "Pelanggan berikutnya: JANGE.",
       "startTime": 15.3,
-      "duration": 2.37,
+      "duration": 2.34,
       "audioRef": "/audio/dlg_03_machine.wav",
       "emotion": "alert",
       "ttsEngineUsed": "local_mms_vits_onnx",
@@ -755,150 +755,150 @@
       "phonemes": [
         {
           "offset": 0,
-          "duration": 0.053,
+          "duration": 0.052,
           "viseme": "REST",
           "syllable": "p",
           "energy": 0.01
         },
         {
-          "offset": 0.053,
-          "duration": 0.15,
+          "offset": 0.052,
+          "duration": 0.149,
           "viseme": "REST",
           "syllable": "pel",
           "energy": 0.01
         },
         {
-          "offset": 0.203,
-          "duration": 0.06,
+          "offset": 0.201,
+          "duration": 0.059,
           "viseme": "REST",
           "syllable": "l",
           "energy": 0.01
         },
         {
-          "offset": 0.263,
-          "duration": 0.15,
+          "offset": 0.26,
+          "duration": 0.149,
           "viseme": "REST",
           "syllable": "ang",
           "energy": 0.01
         },
         {
-          "offset": 0.413,
-          "duration": 0.06,
+          "offset": 0.409,
+          "duration": 0.059,
           "viseme": "REST",
           "syllable": "g",
           "energy": 0.01
         },
         {
-          "offset": 0.473,
-          "duration": 0.15,
+          "offset": 0.468,
+          "duration": 0.149,
           "viseme": "AA",
           "syllable": "gan",
-          "energy": 0.58
+          "energy": 0.54
         },
         {
-          "offset": 0.623,
-          "duration": 0.06,
+          "offset": 0.617,
+          "duration": 0.059,
           "viseme": "FV",
           "syllable": "n",
-          "energy": 0.75
+          "energy": 0.88
         },
         {
-          "offset": 0.683,
-          "duration": 0.053,
+          "offset": 0.676,
+          "duration": 0.052,
           "viseme": "REST",
           "syllable": "b",
-          "energy": 0.58
+          "energy": 0.65
         },
         {
-          "offset": 0.736,
-          "duration": 0.15,
+          "offset": 0.728,
+          "duration": 0.149,
           "viseme": "EE",
           "syllable": "ber",
-          "energy": 0.48
+          "energy": 0.35
         },
         {
-          "offset": 0.886,
-          "duration": 0.06,
+          "offset": 0.877,
+          "duration": 0.059,
           "viseme": "FV",
           "syllable": "r",
-          "energy": 0.43
+          "energy": 0.79
         },
         {
-          "offset": 0.946,
-          "duration": 0.15,
+          "offset": 0.936,
+          "duration": 0.149,
           "viseme": "EE",
           "syllable": "ik",
-          "energy": 0.45
+          "energy": 0.34
         },
         {
-          "offset": 1.096,
-          "duration": 0.06,
+          "offset": 1.085,
+          "duration": 0.059,
           "viseme": "FV",
           "syllable": "k",
-          "energy": 0.43
-        },
-        {
-          "offset": 1.156,
-          "duration": 0.15,
-          "viseme": "OO",
-          "syllable": "ut",
-          "energy": 0.33
-        },
-        {
-          "offset": 1.306,
-          "duration": 0.06,
-          "viseme": "FV",
-          "syllable": "t",
           "energy": 0.46
         },
         {
-          "offset": 1.366,
-          "duration": 0.15,
+          "offset": 1.144,
+          "duration": 0.149,
+          "viseme": "OO",
+          "syllable": "ut",
+          "energy": 0.41
+        },
+        {
+          "offset": 1.293,
+          "duration": 0.059,
+          "viseme": "REST",
+          "syllable": "t",
+          "energy": 0.03
+        },
+        {
+          "offset": 1.352,
+          "duration": 0.149,
           "viseme": "AA",
           "syllable": "nya",
-          "energy": 0.21
+          "energy": 0.24
         },
         {
-          "offset": 1.516,
-          "duration": 0.211,
+          "offset": 1.501,
+          "duration": 0.208,
           "viseme": "REST",
           "syllable": ":",
-          "energy": 0.49
+          "energy": 0.53
         },
         {
-          "offset": 1.727,
-          "duration": 0.15,
+          "offset": 1.709,
+          "duration": 0.149,
           "viseme": "AA",
           "syllable": "jang",
-          "energy": 0.06
+          "energy": 0.25
         },
         {
-          "offset": 1.877,
-          "duration": 0.06,
+          "offset": 1.858,
+          "duration": 0.059,
           "viseme": "FV",
           "syllable": "g",
-          "energy": 0.11
+          "energy": 0.14
         },
         {
-          "offset": 1.937,
-          "duration": 0.15,
+          "offset": 1.917,
+          "duration": 0.149,
           "viseme": "EE",
           "syllable": "e",
-          "energy": 0.66
+          "energy": 0.6
         },
         {
-          "offset": 2.087,
-          "duration": 0.211,
+          "offset": 2.066,
+          "duration": 0.208,
           "viseme": "REST",
           "syllable": ".",
-          "energy": 0.3
+          "energy": 0.25
         },
         {
-          "offset": 2.298,
-          "duration": 0.068,
+          "offset": 2.274,
+          "duration": 0.067,
           "viseme": "REST",
           "syllable": "end",
-          "energy": 0.02
+          "energy": 0.01
         }
       ]
     }
@@ -991,7 +991,7 @@
       "category": "voice",
       "fileUrl": "/audio/dlg_01_jange.wav",
       "startTime": 6,
-      "duration": 2.17,
+      "duration": 2.27,
       "volume": 0.95,
       "licenseStatus": "non_commercial_preview",
       "ttsEngineId": "local_mms_vits_onnx",
@@ -1003,7 +1003,7 @@
       "category": "voice",
       "fileUrl": "/audio/dlg_02_dullah.wav",
       "startTime": 10.6,
-      "duration": 2.28,
+      "duration": 2.16,
       "volume": 0.95,
       "licenseStatus": "non_commercial_preview",
       "ttsEngineId": "local_mms_vits_onnx",
@@ -1026,7 +1026,7 @@
       "category": "voice",
       "fileUrl": "/audio/dlg_03_machine.wav",
       "startTime": 15.3,
-      "duration": 2.37,
+      "duration": 2.34,
       "volume": 0.95,
       "licenseStatus": "non_commercial_preview",
       "ttsEngineId": "local_mms_vits_onnx",
@@ -1099,7 +1099,7 @@
     "characterAnimationVerified": true,
     "dialogueLipSyncVerified": true,
     "cameraCompositionVerified": true,
-    "commercialAssetLicenseVerified": true,
+    "commercialAssetLicenseVerified": false,
     "antiSpamOriginalityVerified": true,
     "reviewerName": "Technical Director — Otak Konslet Studio",
     "reviewNotes": "MVP Episode 01 (\"Kiamat Dimulai dari Minimarket Ciruas\") verified with Natural Indonesian Neural VITS character voice profiles for Jange and Bang Dullah.",

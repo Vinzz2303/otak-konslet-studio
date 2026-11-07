@@ -100,7 +100,7 @@ export default function App() {
 
   // TTS & Character Voice Preview Lab State
   const [ttsEngines, setTtsEngines] = useState<TTSEngineInfo[]>(TTS_ENGINES_REGISTRY);
-  const [selectedEngineId, setSelectedEngineId] = useState<TTSEngineId>('local_mms_vits_onnx');
+  const [selectedEngineId, setSelectedEngineId] = useState<TTSEngineId>('openai_external');
   const [voiceProfiles, setVoiceProfiles] = useState<Record<string, CharacterVoiceProfile>>(
     CHARACTER_VOICE_PROFILES
   );
@@ -306,6 +306,7 @@ export default function App() {
         }),
       });
       const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || 'TTS preview failed');
       if (data?.preview) {
         setPreviewResult(data.preview);
         setTimeout(() => {
@@ -315,6 +316,7 @@ export default function App() {
       }
     } catch (err) {
       console.error('Preview error:', err);
+      setSaveMessage(`Voice preview gagal: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setIsSynthesizingPreview(false);
     }
@@ -338,6 +340,7 @@ export default function App() {
         }),
       });
       const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || 'Voice generation failed');
       if (data?.result) {
         const { fileUrl, durationSec, phonemes, engineUsed, processedText, commercialUseAllowed } =
           data.result;
@@ -414,6 +417,7 @@ export default function App() {
       }
     } catch (err) {
       console.error('Failed to regenerate line:', err);
+      setSaveMessage(`Gagal membuat dialog: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setRegeneratingLineId(null);
     }
@@ -489,13 +493,17 @@ export default function App() {
     reader.readAsText(file);
   };
 
-  // Upload manually recorded WAV/MP3 dialogue & synchronize timing with character mouth animation
+  // Import a human-recorded performance, replacing BOTH dialogue and Remotion audio track.
   const handleUploadVoiceFile = (
     dlg: DialogueLine,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (!/\.(wav|mp3)$/i.test(file.name)) {
+      setSaveMessage('Gunakan rekaman WAV atau MP3.');
+      return;
+    }
     const reader = new FileReader();
     reader.onload = async (ev) => {
       const base64Data = String(ev.target?.result || '');
@@ -504,28 +512,54 @@ export default function App() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            fileName: file.name,
+            fileName: `${dlg.id}_${file.name}`,
             base64Data,
             text: dlg.text,
           }),
         });
         const data = await res.json();
-        const fileUrl = data?.fileUrl || base64Data;
-        const newDuration = data?.durationSec || dlg.duration;
-        const newPhonemes =
-          data?.phonemes || generateIndonesianPhonemes(dlg.text, newDuration);
-
-        updateDialogueLine(dlg.id, {
-          audioRef: fileUrl,
-          duration: newDuration,
-          phonemes: newPhonemes,
+        if (!res.ok || !data?.fileUrl) throw new Error(data?.error || 'Upload failed');
+        const fileUrl: string = data.fileUrl;
+        const newDuration: number = data.durationSec || dlg.duration;
+        const newPhonemes: PhonemeCue[] =
+          data.phonemes || generateIndonesianPhonemes(dlg.text, newDuration);
+        setEpisode((prev) => {
+          const updatedDialogue = prev.dialogue.map((line) =>
+            line.id === dlg.id
+              ? { ...line, audioRef: fileUrl, duration: newDuration, phonemes: newPhonemes, ttsEngineUsed: undefined }
+              : line
+          );
+          const previousTrack = prev.audioTracks.find(
+            (track) =>
+              track.category === 'voice' &&
+              (track.id === `aud_${dlg.id}` ||
+                (track.startTime === dlg.startTime && track.fileUrl === dlg.audioRef))
+          );
+          const trackId = previousTrack?.id || `aud_${dlg.id}`;
+          const updatedTrack = {
+            id: trackId,
+            label: `Rekaman: ${dlg.speakerName}`,
+            category: 'voice' as const,
+            fileUrl,
+            startTime: dlg.startTime,
+            duration: newDuration,
+            volume: 0.95,
+            licenseStatus: 'original_studio' as const,
+            notes: 'Voice recording uploaded by the operator. Confirm performer permission before commercial publishing.',
+          };
+          return {
+            ...prev,
+            dialogue: updatedDialogue,
+            audioTracks: [
+              ...prev.audioTracks.filter((t) => t.id !== trackId),
+              updatedTrack,
+            ],
+            humanReview: { ...prev.humanReview, dialogueLipSyncVerified: false, commercialAssetLicenseVerified: false },
+          };
         });
-        setSaveMessage(
-          `Audio "${file.name}" diimpor & disinkronkan (${newDuration}s)`
-        );
-        setTimeout(() => setSaveMessage(null), 3500);
-      } catch {
-        updateDialogueLine(dlg.id, { audioRef: base64Data });
+        setSaveMessage(`Rekaman ${dlg.speakerName} tersimpan di track MP4. Cek lisensi dan sinkronisasi sebelum rilis.`);
+      } catch (err) {
+        setSaveMessage(`Gagal impor suara: ${err instanceof Error ? err.message : String(err)}`);
       }
     };
     reader.readAsDataURL(file);
