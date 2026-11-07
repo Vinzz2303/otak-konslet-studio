@@ -656,17 +656,16 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
             <circle cx="-54" cy="4" r="12" fill={palette.skinShadow} stroke="#431407" strokeWidth="2" />
             <circle cx="54" cy="4" r="12" fill={palette.skinShadow} stroke="#431407" strokeWidth="2" />
 
-            {/* Head Base */}
-            <rect
-              x="-52"
-              y="-58"
-              width="104"
-              height="114"
-              rx="44"
-              fill={palette.skin}
-              stroke="#431407"
-              strokeWidth="2.8"
-            />
+            {/* Jange's narrow asymmetric face matches the approved sheet better. */}
+            {isJange ? (
+              <path d="M -44 -52 Q -25 -63 0 -61 Q 30 -65 47 -49
+                Q 56 -20 51 8 Q 48 33 29 51 Q 11 63 -5 62
+                Q -30 54 -45 30 Q -57 1 -50 -25 Z"
+                fill={palette.skin} stroke="#51352B" strokeWidth="2.8" />
+            ) : (
+              <rect x="-52" y="-58" width="104" height="114" rx="44"
+                fill={palette.skin} stroke="#431407" strokeWidth="2.8" />
+            )
 
             {/* Bang Dullah Light Stubble / Goatee */}
             {!isJange && (
@@ -700,9 +699,9 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 <ellipse
                   cx="0"
                   cy="0"
-                  rx="14"
-                  ry={emotion === 'shocked' ? 14 : 11}
-                  fill="#FFFFFF"
+                  rx={isJange ? 17 : 14}
+                  ry={emotion === 'shocked' ? 14 : isJange ? 9 : 11}
+                  fill={isJange ? '#F3ECE3' : '#FFFFFF'}
                   stroke="#1E293B"
                   strokeWidth="2"
                 />
@@ -710,7 +709,9 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 {/* Pupil & Iris */}
                 {upperEyelidDrop < 13 && (
                   <g transform={`translate(${pupilShiftX}, ${emotion === 'sleepy' ? 1.5 : 0})`}>
-                    <circle cx="0" cy="0" r={pupilRadius} fill="#0F172A" />
+                    <circle cx="0" cy={isJange ? 3 : 0}
+                      r={isJange ? Math.min(5, pupilRadius) : pupilRadius}
+                      fill="#1B191A" />
                     <circle cx="-1.8" cy="-2" r="1.6" fill="#FFFFFF" />
                   </g>
                 )}
@@ -729,9 +730,23 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
               </g>
             ))}
 
-            {/* Jange's tired, unpolished face: faded freckles, uneven stubble and a tiny blemish. */}
+            {/* Jange's unmistakable left-cheek plaster, acne and sparse stubble. */}
             {isJange && (
               <g>
+                <g transform="translate(-33, 20) rotate(26)">
+                  <rect x="-10" y="-4" width="20" height="9" rx="3"
+                    fill="#E2C5A9" stroke="#AA846B" strokeWidth="1.1" />
+                  <rect x="-3" y="-3" width="6" height="7" rx="1"
+                    fill="#C8A88A" opacity="0.7" />
+                  <circle cx="-6" cy="0" r="0.8" fill="#AA846B" />
+                  <circle cx="6" cy="0" r="0.8" fill="#AA846B" />
+                </g>
+                <path d="M -37 10 Q -23 19 -14 12 M 13 12 Q 26 20 37 10"
+                  fill="none" stroke="#8C6657" strokeWidth="2" opacity="0.65" />
+                <path d="M -15 40 l2 3 M -7 43 l3 1 M 4 43 l2 2 M 15 41 l3 2"
+                  stroke="#58423B" strokeWidth="1.4" opacity="0.6" />
+                <circle cx="-20" cy="29" r="1.5" fill="#A85E51" />
+                <circle cx="21" cy="30" r="2" fill="#A85E51" />
                 <path d="M -37 20 Q -27 23 -20 20 M 18 20 Q 27 23 35 19"
                   stroke="#9B5D50" strokeWidth="2" opacity="0.5" fill="none" />
                 <circle cx="-37" cy="18" r="2.2" fill="#A76454" opacity="0.7" />
@@ -782,17 +797,17 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                ============================================================ */}
             <g transform="translate(0, 31)">
               {viseme === 'REST' && (
-                <path
-                  d={
-                    emotion === 'confused'
-                      ? 'M -12 2 Q -2 -3 11 3'
-                      : 'M -13 0 Q 0 3 13 0'
-                  }
-                  fill="none"
-                  stroke="#431407"
-                  strokeWidth="3.2"
-                  strokeLinecap="round"
-                />
+                isJange && !isSpeaking && (emotion === 'sleepy' || emotion === 'confused')
+                  ? <g>
+                      {/* Slightly open, slack resting mouth; speaking M/B/P cues still close. */}
+                      <ellipse cx="1" cy="3" rx="11" ry="5.5" fill="#59322E"
+                        stroke="#70453D" strokeWidth="1.9" />
+                      <path d="M -5 0 l11 0" stroke="#E8C5AD" strokeWidth="1.3" />
+                    </g>
+                  : <path
+                      d={emotion === 'confused' ? 'M -12 2 Q -2 -3 11 3' : 'M -13 0 Q 0 3 13 0'}
+                      fill="none" stroke="#431407" strokeWidth="3.2"
+                      strokeLinecap="round" />
               )}
 
               {viseme === 'AA' && (
@@ -900,8 +915,9 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 <path d="M -54 -23 Q -67 -15 -57 5 M 51 -25 Q 65 -17 56 -2"
                   fill="none" stroke={palette.hair} strokeWidth="8" strokeLinecap="round" />
                 {/* The intentionally misplaced hair clip makes Jange easy to identify in every episode. */}
-                <rect x="22" y="-66" width="21" height="5" rx="2" fill="#DCB6CC"
-                  stroke="#8B5F78" strokeWidth="1.5" transform="rotate(24 32 -63)" />
+                <rect x="-48" y="-57" width="23" height="7" rx="2.6" fill="#E9A0B4"
+                  stroke="#9E4A6A" strokeWidth="1.8" transform="rotate(-18 -36 -54)" />
+                <path d="M -43 -55 L -31 -58" stroke="#FFD5DC" strokeWidth="1.4" />
                 <path d="M -46 -45 L -56 -55 M 45 -55 L 54 -68" stroke={palette.hair}
                   strokeWidth="7" strokeLinecap="round" />
               </g>
