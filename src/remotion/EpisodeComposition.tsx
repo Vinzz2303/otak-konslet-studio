@@ -32,7 +32,8 @@ function resolveAudioSrc(fileUrl: string): string {
   ) {
     return fileUrl;
   }
-  const cleanPath = fileUrl.startsWith('/') ? fileUrl.slice(1) : fileUrl;
+  // Remove cache-busting query strings before resolving bundled public assets.
+  const cleanPath = (fileUrl.startsWith('/') ? fileUrl.slice(1) : fileUrl).split(/[?#]/)[0];
   return staticFile(cleanPath);
 }
 
@@ -489,6 +490,32 @@ export const EpisodeComposition: React.FC<EpisodeCompositionProps> = ({
         </div>
       )}
 
+      {/* License-aware burn-in: preview-only audio must never look publication-ready. */}
+      {episode.audioTracks.some(
+        (track) => track.licenseStatus === 'non_commercial_preview' ||
+          track.licenseStatus === 'placeholder_synth'
+      ) && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 130,
+            left: 48,
+            right: 48,
+            background: 'rgba(127, 29, 29, 0.88)',
+            color: '#FFFFFF',
+            fontSize: 22,
+            fontWeight: 900,
+            letterSpacing: 1,
+            textAlign: 'center',
+            padding: '12px 18px',
+            borderRadius: 8,
+            zIndex: 99,
+            pointerEvents: 'none',
+          }}
+        >
+          DEMO NONKOMERSIAL — GANTI AUDIO SEBELUM PUBLIKASI
+        </div>
+      )}
       {episode.showSafeAreaGuides && (
         <AbsoluteFill
           style={{
