@@ -512,6 +512,11 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                   stroke="#1E293B"
                   strokeWidth="3"
                 />
+                {/* Frayed hoodie seams and tiny worn patches, not a clean fashion render. */}
+                <path d="M -56 57 l8 5 l-6 6 M 57 55 l-6 6 l7 7"
+                  fill="none" stroke="#778495" strokeWidth="2" opacity="0.7" />
+                <path d="M -36 72 l8 -3 M -27 78 l6 -2"
+                  stroke="#18212B" strokeWidth="2" opacity="0.8" />
                 {/* Hoodie Ribbed Hem */}
                 <rect x="-54" y="80" width="108" height="14" rx="4" fill={palette.secondaryTop} />
                 {/* Kangaroo Front Pocket */}
@@ -724,6 +729,20 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
               </g>
             ))}
 
+            {/* Jange's tired, unpolished face: faded freckles, uneven stubble and a tiny blemish. */}
+            {isJange && (
+              <g>
+                <path d="M -37 20 Q -27 23 -20 20 M 18 20 Q 27 23 35 19"
+                  stroke="#9B5D50" strokeWidth="2" opacity="0.5" fill="none" />
+                <circle cx="-37" cy="18" r="2.2" fill="#A76454" opacity="0.7" />
+                <circle cx="30" cy="24" r="1.5" fill="#8F534C" opacity="0.7" />
+                <path d="M -8 42 l3 2 M 9 42 l3 1" stroke="#52342B"
+                  strokeWidth="1.5" opacity="0.7" />
+                <path d="M -26 8 Q -20 15 -12 10 M 13 10 Q 21 15 27 8"
+                  stroke="#8A564F" strokeWidth="2" opacity="0.55" fill="none" />
+              </g>
+            )}
+
             {/* Nose */}
             <path
               d="M -2 -4 L -5 12 L 3 14"
@@ -872,13 +891,20 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 LAYER 14: FRONT HAIR / CAP LAYER
                ============================================================ */}
             {isJange ? (
-              /* Jange Signature Messy Gen-Z Hair & Bangs */
-              <path
-                d="M -56 -24 C -62 -62, -25 -78, 4 -74 C 38 -78, 62 -56, 56 -20 C 46 -38, 32 -42, 22 -24 C 12 -44, -4 -42, -12 -20 C -26 -42, -42 -40, -56 -24 Z"
-                fill={palette.hair}
-                stroke="#0F172A"
-                strokeWidth="2"
-              />
+              /* Jange: bad middle-part, unwashed flattened strands, uneven tufts. Signature identity. */
+              <g>
+                <path d="M -57 -23 Q -67 -65 -38 -74 Q -14 -88 4 -79 Q 39 -91 56 -64 Q 68 -46 57 -17 L 46 -36 L 32 -25 L 26 -50 L 11 -29 L -3 -65 L -16 -22 L -33 -46 L -46 -15 Z"
+                  fill={palette.hair} stroke="#111319" strokeWidth="2.5" />
+                <path d="M -18 -70 Q -5 -53 -8 -30 M 2 -73 Q 17 -58 13 -38 M 39 -60 Q 48 -39 44 -28"
+                  fill="none" stroke="#55585D" strokeWidth="2" opacity="0.7" />
+                <path d="M -54 -23 Q -67 -15 -57 5 M 51 -25 Q 65 -17 56 -2"
+                  fill="none" stroke={palette.hair} strokeWidth="8" strokeLinecap="round" />
+                {/* The intentionally misplaced hair clip makes Jange easy to identify in every episode. */}
+                <rect x="22" y="-66" width="21" height="5" rx="2" fill="#DCB6CC"
+                  stroke="#8B5F78" strokeWidth="1.5" transform="rotate(24 32 -63)" />
+                <path d="M -46 -45 L -56 -55 M 45 -55 L 54 -68" stroke={palette.hair}
+                  strokeWidth="7" strokeLinecap="round" />
+              </g>
             ) : (
               /* Bang Dullah Neat Parted Hair + Minimarket Visor Cap */
               <g>
