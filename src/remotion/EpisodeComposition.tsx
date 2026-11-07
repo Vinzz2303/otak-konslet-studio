@@ -32,7 +32,8 @@ function resolveAudioSrc(fileUrl: string): string {
   ) {
     return fileUrl;
   }
-  const cleanPath = fileUrl.startsWith('/') ? fileUrl.slice(1) : fileUrl;
+  // Remove cache-busting query strings before resolving bundled public assets.
+  const cleanPath = (fileUrl.startsWith('/') ? fileUrl.slice(1) : fileUrl).split(/[?#]/)[0];
   return staticFile(cleanPath);
 }
 
