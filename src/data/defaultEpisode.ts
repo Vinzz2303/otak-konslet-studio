@@ -629,7 +629,7 @@ export const DEFAULT_EPISODE: EpisodeData = {
     characterAnimationVerified: true,
     dialogueLipSyncVerified: true,
     cameraCompositionVerified: true,
-    commercialAssetLicenseVerified: true,
+    commercialAssetLicenseVerified: false, // Non-commercial demo TTS requires replacement before commercial approval
     antiSpamOriginalityVerified: true,
     reviewerName: 'Technical Director — Otak Konslet Studio',
     reviewNotes:
