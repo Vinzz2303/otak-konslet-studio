@@ -400,6 +400,16 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
       }}
     >
       <svg viewBox="0 0 300 540" width="100%" height="100%" style={{ overflow: 'visible' }}>
+        {/* Repeatable stylized Banten woven accessory, not an attempt to reproduce ceremonial attire. */}
+        <defs>
+          <pattern id="jange-tenun" width="18" height="30" patternUnits="userSpaceOnUse">
+            <rect width="18" height="30" fill="#30325B" />
+            <path d="M9 1 L15 8 L9 15 L3 8 Z M9 16 L15 23 L9 29 L3 23 Z"
+              fill="#A75A44" stroke="#E2B278" strokeWidth="1.2" />
+            <path d="M1 0 V30 M17 0 V30" stroke="#B4A0C7" strokeWidth="2" />
+            <path d="M0 14 H18" stroke="#D2AD79" strokeWidth="1.4" />
+          </pattern>
+        </defs>
         {/* ============================================================
             LAYER 01: GROUND SHADOW
            ============================================================ */}
@@ -461,14 +471,25 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
               stroke="#0F172A"
               strokeWidth="2.5"
             />
+            {isJange && (
+              <g>
+                <path d="M -12 55 L 5 47 L 14 60 L 10 76 L -7 72 Z"
+                  fill={palette.skinShadow} stroke="#24252B" strokeWidth="2" />
+                <path d="M -15 52 L 2 50 M -12 73 L 12 78 M -16 89 L -8 86"
+                  stroke="#B2B0AB" strokeWidth="1.8" fill="none" />
+                <path d="M -9 26 l5 3 M 8 101 l-4 5 M -11 115 l8 -2"
+                  stroke="#80786F" strokeWidth="2" opacity="0.8" />
+              </g>
+            )}
             {isJange ? (
               /* Jange ankle + Indonesian slide sandal */
               <g transform="translate(0, 142)">
                 <rect x="-11" y="0" width="22" height="18" rx="4" fill={palette.skin} />
                 {/* Sandal sole */}
-                <rect x="-16" y="16" width="42" height="10" rx="5" fill="#451A03" />
-                {/* Sandal strap */}
-                <path d="M -8 16 C 0 4, 16 4, 20 16" fill={palette.footwear} stroke="#290F02" strokeWidth="2" />
+                <rect x="-16" y="16" width="42" height="10" rx="5" fill="#1B2935" />
+                {/* Blue left sandal, intentionally mismatched. */}
+                <path d="M -8 16 C 0 4, 16 4, 20 16" fill="#345F76" stroke="#142F40" strokeWidth="2" />
+                <path d="M 1 10 l10 6" fill="none" stroke="#CCBA9D" strokeWidth="1.8" />
               </g>
             ) : (
               /* Bang Dullah work shoe */
@@ -488,11 +509,22 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
               stroke="#0F172A"
               strokeWidth="2.5"
             />
+            {isJange && (
+              <g>
+                <path d="M -12 63 L 5 57 L 14 70 L 8 81 L -9 78 Z"
+                  fill={palette.skinShadow} stroke="#24252B" strokeWidth="2" />
+                <path d="M -15 60 L 5 58 M -12 80 L 11 84 M 11 112 l-8 4"
+                  fill="none" stroke="#B2B0AB" strokeWidth="1.8" />
+                <path d="M 3 34 l5 6 M -12 95 l6 3" stroke="#80786F"
+                  strokeWidth="2" opacity="0.7" />
+              </g>
+            )}
             {isJange ? (
               <g transform="translate(0, 142)">
                 <rect x="-11" y="0" width="22" height="18" rx="4" fill={palette.skin} />
-                <rect x="-14" y="16" width="42" height="10" rx="5" fill="#451A03" />
-                <path d="M -6 16 C 2 4, 18 4, 22 16" fill={palette.footwear} stroke="#290F02" strokeWidth="2" />
+                <rect x="-14" y="16" width="42" height="10" rx="5" fill="#42201E" />
+                {/* Red right sandal, intentionally mismatched. */}
+                <path d="M -6 16 C 2 4, 18 4, 22 16" fill="#AD655E" stroke="#4E2623" strokeWidth="2" />
               </g>
             ) : (
               <rect x="-14" y="142" width="40" height="22" rx="8" fill={palette.footwear} />
@@ -530,6 +562,18 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                 <line x1="-12" y1="-55" x2="-14" y2="-12" stroke="#E2E8F0" strokeWidth="3" strokeLinecap="round" />
                 <line x1="12" y1="-55" x2="14" y2="-12" stroke="#E2E8F0" strokeWidth="3" strokeLinecap="round" />
 
+                {/* Threadbare fabric, seams and scuffs on Jange's hoodie. */}
+                <path d="M -57 -54 l11 10 l-7 3 M -38 18 l8 -4 l-3 8 M 22 66 l12 -7"
+                  stroke="#78716C" strokeWidth="2" fill="none" opacity="0.8" />
+                <path d="M -34 -29 l8 5 l-4 9 l-9 -3 Z" fill="#15151A"
+                  stroke="#68656A" strokeWidth="1.3" />
+
+                {/* Recurring Banten woven shoulder accent from the approved reference. */}
+                <path d="M 38 -72 Q 45 -77 54 -61 L 62 87 L 46 89 L 40 -37 Z"
+                  fill="url(#jange-tenun)" stroke="#8A6876" strokeWidth="1.8" />
+                <path d="M 47 90 v12 M 52 90 v13 M 58 90 v11"
+                  stroke="#CCAA91" strokeWidth="2" strokeLinecap="round" />
+
                 {/* LAYER 06: Small Crossbody Sling Bag */}
                 <line
                   x1="-46"
@@ -547,12 +591,15 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
                     width="48"
                     height="34"
                     rx="8"
-                    fill={palette.accessory}
-                    stroke="#78350F"
+                    fill="#777366"
+                    stroke="#403E38"
                     strokeWidth="2.5"
                   />
-                  <line x1="-18" y1="-4" x2="18" y2="-4" stroke="#FEF3C7" strokeWidth="2" />
-                  <rect x="-8" y="2" width="16" height="8" rx="2" fill="#1E293B" />
+                  <path d="M -18 -2 H 18 M -18 7 Q -5 11 12 8" fill="none"
+                    stroke="#3F423E" strokeWidth="2" />
+                  <path d="M -21 -12 l8 4 l5 -3 M 9 13 l8 -5" fill="none"
+                    stroke="#B9AD95" strokeWidth="2" opacity="0.75" />
+                  <rect x="-8" y="2" width="16" height="8" rx="2" fill="#363B3B" />
                 </g>
               </>
             ) : (
